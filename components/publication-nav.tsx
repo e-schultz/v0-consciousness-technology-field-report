@@ -9,6 +9,7 @@ const publications = [
   { id: "oracle-crosstalk", name: "Oracle Crosstalk", path: "/oracle-crosstalk" },
   { id: "testing-fragments", name: "Testing Fragments", path: "/testing-fragments" },
   { id: "horror-healing", name: "Horror Healing", path: "/horror-healing" },
+  { id: "aesthetic-synthesis", name: "Aesthetic Synthesis", path: "/aesthetic-synthesis" },
 ]
 
 export default function PublicationNav() {

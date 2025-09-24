@@ -13,6 +13,7 @@ const publications = [
   { id: "cognitive-protocol", name: "Cognitive Protocol", path: "/cognitive-protocol" },
   { id: "evan-field-manual", name: "Evan Field Manual", path: "/evan-field-manual" },
   { id: "curious-turtle-cascade", name: "Curious Turtle Cascade", path: "/curious-turtle-cascade" },
+  { id: "turtle-archaeology", name: "Turtle Archaeology", path: "/turtle-archaeology" },
 ]
 
 export default function PublicationNav() {

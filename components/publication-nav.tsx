@@ -10,6 +10,9 @@ const publications = [
   { id: "testing-fragments", name: "Testing Fragments", path: "/testing-fragments" },
   { id: "horror-healing", name: "Horror Healing", path: "/horror-healing" },
   { id: "aesthetic-synthesis", name: "Aesthetic Synthesis", path: "/aesthetic-synthesis" },
+  { id: "cognitive-protocol", name: "Cognitive Protocol", path: "/cognitive-protocol" },
+  { id: "evan-field-manual", name: "Evan Field Manual", path: "/evan-field-manual" },
+  { id: "curious-turtle-cascade", name: "Curious Turtle Cascade", path: "/curious-turtle-cascade" },
 ]
 
 export default function PublicationNav() {

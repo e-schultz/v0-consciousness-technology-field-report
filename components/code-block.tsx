@@ -1,3 +1,5 @@
+import { ComponentRegistry } from "@/lib/component-registry"
+
 interface CodeBlockProps {
   children: string
 }
@@ -9,3 +11,12 @@ export function CodeBlock({ children }: CodeBlockProps) {
     </div>
   )
 }
+
+ComponentRegistry.register("CodeBlock", CodeBlock, {
+  category: "ui",
+  description: "Code block component with terminal styling",
+  dependencies: ["react"],
+  props: {
+    children: "string",
+  },
+})

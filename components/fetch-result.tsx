@@ -1,3 +1,5 @@
+import { ComponentRegistry } from "@/lib/component-registry"
+
 interface FetchResultProps {
   url: string
   prediction: string
@@ -24,3 +26,15 @@ export function FetchResult({ url, prediction, reality, accuracy }: FetchResultP
     </div>
   )
 }
+
+ComponentRegistry.register("FetchResult", FetchResult, {
+  category: "ui",
+  description: "Component for displaying fetch prediction game results",
+  dependencies: ["react"],
+  props: {
+    url: "string",
+    prediction: "string",
+    reality: "string",
+    accuracy: "number",
+  },
+})

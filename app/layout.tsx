@@ -15,18 +15,21 @@ const fontGeist = Geist({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-geist",
+  display: "swap",
 })
 
 const fontGeistMono = Geist_Mono({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-geist-mono",
+  display: "swap",
 })
 
 const fontSourceSerif4 = Source_Serif_4({
   subsets: ["latin"],
   weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-source-serif-4",
+  display: "swap",
 })
 
 export const metadata: Metadata = {

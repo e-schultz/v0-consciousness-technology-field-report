@@ -50,21 +50,31 @@ export default function PublicationNav() {
     const controlNavbar = () => {
       const currentScrollY = window.scrollY
 
-      // Show navbar when scrolling up or at top
       if (currentScrollY < lastScrollY || currentScrollY < 10) {
         setIsVisible(true)
       }
-      // Hide navbar when scrolling down (but not immediately)
-      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+      // Only hide when scrolling down significantly to avoid iOS Safari conflicts
+      else if (currentScrollY > lastScrollY && currentScrollY > 150) {
         setIsVisible(false)
-        setIsMobileMenuOpen(false) // Close mobile menu when hiding
+        setIsMobileMenuOpen(false)
       }
 
       setLastScrollY(currentScrollY)
     }
 
-    window.addEventListener("scroll", controlNavbar)
-    return () => window.removeEventListener("scroll", controlNavbar)
+    let ticking = false
+    const throttledControlNavbar = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          controlNavbar()
+          ticking = false
+        })
+        ticking = true
+      }
+    }
+
+    window.addEventListener("scroll", throttledControlNavbar, { passive: true })
+    return () => window.removeEventListener("scroll", throttledControlNavbar)
   }, [lastScrollY])
 
   useEffect(() => {
@@ -85,29 +95,46 @@ export default function PublicationNav() {
     }
   }, [isMobileMenuOpen])
 
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = "unset"
+    }
+
+    return () => {
+      document.body.style.overflow = "unset"
+    }
+  }, [isMobileMenuOpen])
+
   return (
     <div
       className={`fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-md border-b border-[#9945ff]/30 transition-transform duration-300 ease-in-out ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
       data-mobile-nav
+      style={{
+        WebkitBackfaceVisibility: "hidden",
+        backfaceVisibility: "hidden",
+      }}
     >
       <div className="max-w-6xl mx-auto px-4 py-3">
-        {/* Mobile header with hamburger menu */}
-        <div className="flex items-center justify-between lg:hidden">
+        <div className="flex items-center justify-between xl:hidden">
           <div className="text-[#e0ffe0] font-medium text-lg">Consciousness Tech Field Report</div>
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-3 text-[#e0ffe0] hover:text-white hover:bg-[#9945ff]/20 rounded-lg transition-colors touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="p-3 text-[#e0ffe0] hover:text-white hover:bg-[#9945ff]/20 rounded-lg transition-colors touch-manipulation min-h-[48px] min-w-[48px] flex items-center justify-center"
             aria-label="Toggle navigation menu"
             aria-expanded={isMobileMenuOpen}
+            style={{
+              WebkitTapHighlightColor: "transparent",
+            }}
           >
             {isMobileMenuOpen ? <XIcon /> : <MenuIcon />}
           </button>
         </div>
 
-        {/* Desktop navigation */}
-        <div className="hidden lg:flex flex-wrap gap-2">
+        <div className="hidden xl:flex flex-wrap gap-2">
           {publications.map((pub) => {
             const isActive = pathname === pub.path
             return (
@@ -126,24 +153,26 @@ export default function PublicationNav() {
           })}
         </div>
 
-        {/* Mobile menu */}
         <div
-          className={`lg:hidden transition-all duration-300 ease-in-out ${
-            isMobileMenuOpen ? "max-h-[600px] opacity-100 mt-4 visible" : "max-h-0 opacity-0 invisible overflow-hidden"
+          className={`xl:hidden transition-all duration-300 ease-in-out ${
+            isMobileMenuOpen ? "max-h-[70vh] opacity-100 mt-4 visible" : "max-h-0 opacity-0 invisible overflow-hidden"
           }`}
         >
-          <div className="flex flex-col gap-2 pb-2">
+          <div className="flex flex-col gap-2 pb-2 max-h-[60vh] overflow-y-auto">
             {publications.map((pub) => {
               const isActive = pathname === pub.path
               return (
                 <Link
                   key={pub.id}
                   href={pub.path}
-                  className={`px-4 py-4 text-base font-medium transition-all duration-200 rounded-lg touch-manipulation active:scale-95 min-h-[48px] flex items-center ${
+                  className={`px-4 py-4 text-base font-medium transition-all duration-200 rounded-lg touch-manipulation active:scale-95 min-h-[52px] flex items-center ${
                     isActive
                       ? "bg-[#9945ff] text-white shadow-lg shadow-[#9945ff]/25 ring-2 ring-[#9945ff]/50"
                       : "bg-black/50 text-[#e0ffe0]/70 hover:bg-[#9945ff]/20 hover:text-[#e0ffe0] border border-[#9945ff]/30 hover:border-[#9945ff]/50"
                   }`}
+                  style={{
+                    WebkitTapHighlightColor: "transparent",
+                  }}
                 >
                   {pub.title}
                 </Link>

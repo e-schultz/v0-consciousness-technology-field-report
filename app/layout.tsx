@@ -7,14 +7,7 @@ import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
 import "@/lib/component-registry-setup"
 
-import { Source_Serif_4, Geist as V0_Font_Geist, Geist_Mono as V0_Font_Geist_Mono, Source_Serif_4 as V0_Font_Source_Serif_4 } from 'next/font/google'
-
-// Initialize fonts
-V0_Font_Geist({ weight: ["100","200","300","400","500","600","700","800","900"] })
-V0_Font_Geist_Mono({ weight: ["100","200","300","400","500","600","700","800","900"] })
-V0_Font_Source_Serif_4({ weight: ["200","300","400","500","600","700","800","900"] })
-
-const fontGeistMono = GeistMono
+import { Source_Serif_4 } from "next/font/google"
 
 const fontSourceSerif4 = Source_Serif_4({
   subsets: ["latin"],
@@ -24,6 +17,7 @@ const fontSourceSerif4 = Source_Serif_4({
 })
 
 const fontGeist = GeistSans
+const fontGeistMono = GeistMono
 
 export const metadata: Metadata = {
   title: "Consciousness Technology Field Report",
@@ -37,7 +31,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${fontGeist.variable} ${fontGeistMono.variable} antialiased`}>
+    <html
+      lang="en"
+      className={`${fontGeist.variable} ${fontGeistMono.variable} ${fontSourceSerif4.variable} antialiased`}
+    >
       <body className="font-sans bg-[#0a0014] text-[#e0ffe0]">
         <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
           <PublicationNav />

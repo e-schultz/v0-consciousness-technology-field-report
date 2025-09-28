@@ -3,21 +3,13 @@ import type { Metadata } from "next"
 import { Suspense } from "react"
 import "./globals.css"
 import PublicationNav from "@/components/publication-nav"
-import { Geist, Geist_Mono, Source_Serif_4 } from "next/font/google"
+import { GeistSans } from "geist/font/sans"
+import { GeistMono } from "geist/font/mono"
+import { Source_Serif_4 } from "next/font/google"
 
-const fontGeist = Geist({
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-geist",
-  display: "swap",
-})
+const fontGeist = GeistSans
 
-const fontGeistMono = Geist_Mono({
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-geist-mono",
-  display: "swap",
-})
+const fontGeistMono = GeistMono
 
 const fontSourceSerif4 = Source_Serif_4({
   subsets: ["latin"],
@@ -40,7 +32,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`antialiased ${fontGeist.variable} ${fontGeistMono.variable} ${fontSourceSerif4.variable}`}
+      className={`antialiased ${fontGeist.className} ${fontGeistMono.className} ${fontSourceSerif4.variable}`}
     >
       <body className="font-sans bg-[#0a0014] text-[#e0ffe0]">
         <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
